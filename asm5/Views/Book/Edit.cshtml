@@ -1,0 +1,87 @@
+@model asm5.Models.Book
+
+@{
+    ViewData["Title"] = "Chỉnh sửa sách";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header bg-warning text-dark py-3 text-center">
+                    <h3 class="mb-0 fw-bold"><i class="bi bi-pencil-square me-2"></i>Chỉnh Sửa Sách</h3>
+                </div>
+                <div class="card-body p-4 bg-white">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="BookId" />
+
+                        <!-- Title -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Title" class="form-control" placeholder="Nhập tên sách" id="titleInput" />
+                            <label asp-for="Title"></label>
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Author -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Author" class="form-control" placeholder="Nhập tác giả" id="authorInput" />
+                            <label asp-for="Author"></label>
+                            <span asp-validation-for="Author" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Price" type="number" class="form-control" placeholder="Nhập giá bán" id="priceInput" />
+                            <label asp-for="Price"></label>
+                            <span asp-validation-for="Price" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="form-floating mb-3">
+                            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId" id="categoryInput">
+                                <option value="">-- Chọn chủ đề --</option>
+                            </select>
+                            <label asp-for="CategoryId"></label>
+                            <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Current Image Preview -->
+                        <div class="mb-3 text-center bg-light p-3 rounded border">
+                            <div class="fw-bold text-secondary mb-2 small">Hình ảnh hiện tại</div>
+                            <img src="~/Content/ImageBooks/@Model.Image" alt="@Model.Title" class="img-thumbnail" style="max-height: 120px; object-fit: contain;" />
+                        </div>
+
+                        <!-- Optional Image File Upload -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-secondary">Thay đổi hình ảnh sách (Không bắt buộc)</label>
+                            <input type="file" name="imageFile" class="form-control form-control-lg" accept="image/*" />
+                            <span asp-validation-for="Image" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label asp-for="Description" class="form-label fw-bold text-secondary"></label>
+                            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Nhập mô tả cuốn sách..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-warning btn-lg fw-bold rounded-3 text-dark">
+                                <i class="bi bi-save me-1"></i> Lưu thay đổi
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg fw-bold rounded-3">
+                                Hủy bỏ
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
